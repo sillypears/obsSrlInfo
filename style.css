@@ -1,0 +1,15 @@
+html,body{
+	font-family: "Upheaval TT (BRK)", Arial, Helvetica;
+	font-size: 1.2em;
+
+}
+.game{
+	color: green;
+}
+.goal{
+	color: red;
+}
+
+.racer{
+	color: blue;
+}
