@@ -60,19 +60,26 @@ function getRank(rank){
 
 function make_list(entrants) {
     var names = [];
-    //console.log(entrants);
+    console.log(entrants);
     for(var name in entrants) {
     	var	place = getPlace(entrants[name].place);
     	var sep = ''
     	if (place != '') {
     		sep = ' - ';
     	}
-        names.push(name+sep+place);
+    	time = ''
+    	if (entrants[name].time > 0) {
+    		time = getTime(entrants[name].time,entrants[name].place);
+    	} else {
+    		time = 'na';
+    	}
+        names.push(name+sep+place+sep+time);
     }
     return names;
 }
 
 function getTime(secs,place,firstPlaceTime){
+	
 	if(secs>0){
 		convert=secondsToTime(secs)
 		secondsDifference=secs-firstPlaceTime
@@ -81,13 +88,10 @@ function getTime(secs,place,firstPlaceTime){
 		if(secondsDifference>0){
 			return'<span title=\"+'+difference.h+':'+difference.m+':'+difference.s+'\">'+convert.h+':'+convert.m+':'+convert.s+'</span>';}else{return convert.h+':'+convert.m+':'+convert.s;
 		}
-	} else if(place==9999){
-		return'<span class=\"red\">DQ</span>'
-	} else if(place==9998){
-		return'<span class=\"red\">Forfeit</span>'
-	} else{
+	} else {
 		return''
 	}
+	
 };
 
 function secondsToTime(secs){
