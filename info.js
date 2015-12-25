@@ -60,7 +60,7 @@ function getRank(rank){
 
 function make_list(entrants) {
     var names = [];
-    console.log(entrants);
+    //console.log(entrants);
     for(var name in entrants) {
     	var	place = getPlace(entrants[name].place);
     	var sep = ''
