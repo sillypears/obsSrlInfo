@@ -1,7 +1,6 @@
 //Global stuffs
 
 var srlAPI = "http://api.speedrunslive.com"; 
-var currentRaces = {}; // 
 
 function get_parameters() {
 	
@@ -9,14 +8,15 @@ function get_parameters() {
 		return location.search.split('game=')[1]
 	} else {
 		return 'default'
- 	} 
+	} 
 }
+
 function get_races() {
     $.ajax({
 		type : "GET",
         url : srlAPI + "/races/",
         cache : false,
-		}).done(printResponse);	
+		}).done(print_response);	
 }
 
 function make_list(entrants) {
@@ -27,10 +27,9 @@ function make_list(entrants) {
     return names;
 }
 
-function printResponse(data) {
+function print_response(data) {
 	race_list = {};
 	current_game = get_parameters();
-
 	$.each(data.races, function (x, object) {
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.statetext == "In Progress") {
@@ -42,27 +41,31 @@ function printResponse(data) {
 		}
 		});
 	if (Object.keys(race_list).length > 0) {
-	  var someHtml = $('<div class=info>Current Races:<div class=entrants ></div></div>');
-	  $.each(race_list, function(x, obj){
-		someHtml.children('div').append('<div class=goal>Goal: '+obj.goal+
+		var some_html = $('<div class=info>Current Races:<div class=entrants ></div></div>');
+	    $.each(race_list, function(x, obj){
+	    	var d = new Date(0);
+	    	d.setUTCSeconds(obj.time);
+	    	var time = new Date(Math.abs(new Date() - d));
+		    some_html.children('div').append('<div class=goal>Goal: '+obj.goal+
+		    '<div class=time>Time: '+time.getMinutes()+":"+time.getSeconds()+'</div>'+
 			'<div class=racer>'+
 			'<list><li>'+
 			make_list(obj.entrants).join('</li><li>')+
 			'</li></div></div>&nbsp</div>');
 	  });
     } else {
-    	someHtml = $('<div class=info>No Races In Progress</div>');
+    	some_html = $('<div class=info>No Races In Progress</div>');
     }   
 	var date = new Date();
-	console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds());
+	//console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds());
 
-	$('#content').html(someHtml);
+	$('#content').html(some_html);
 }
 
 $(document).ready( function(){
 	get_races();
 	setInterval(function(){
 		get_races();
-	}, 60000);
+	}, 30000);
  }
 )
