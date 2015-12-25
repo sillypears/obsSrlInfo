@@ -2,15 +2,12 @@
 
 var srlAPI = "http://api.speedrunslive.com"; 
 var currentRaces = {}; // 
-var skipListing = 1;
 
 function get_parameters() {
 	
 	if (location.search.split('game=')[1] != null) {
-		skipListing == 0;
 		return location.search.split('game=')[1]
 	} else {
-		skipListing = 0;
 		return 'default'
  	} 
 }
@@ -37,9 +34,7 @@ function printResponse(data) {
 	$.each(data.races, function (x, object) {
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.statetext == "In Progress") {
-			console.log(object.game.abbrev);
-			console.log(current_game);
-			if (object.game.abbrev == current_game && current_game != 'default') {
+			if (object.game.abbrev == current_game) {
 				race_list[object.id] = object;
 			} else if (current_game == 'default') {
 				race_list[object.id] = object;
@@ -49,8 +44,7 @@ function printResponse(data) {
 	if (Object.keys(race_list).length > 0) {
 	  var someHtml = $('<div class=info>Current Races:<div class=entrants ></div></div>');
 	  $.each(race_list, function(x, obj){
-		someHtml.children('div').append('<div class=game>Game: '+obj.game.name+
-			'<div class=goal>Goal: '+obj.goal+
+		someHtml.children('div').append('<div class=goal>Goal: '+obj.goal+
 			'<div class=racer>'+
 			'<list><li>'+
 			make_list(obj.entrants).join('</li><li>')+
