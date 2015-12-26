@@ -9,14 +9,14 @@ function get_parameters() {
 	} else {
 		return 'default'
 	} 
-}
+};
 
-function getTrueskill(skill){
+function get_trueskill(skill){
 	if(skill==0){
 		skill="unranked";
 	}
 	return skill;
-}
+};
 
 function get_races() {
     $.ajax({
@@ -24,11 +24,11 @@ function get_races() {
         url : srlAPI + "/races/",
         cache : false,
 		}).done(print_response);	
-}
+};
 
-function getPlace(place){
+function get_place(place){
 	if (place < 9994){
-		return getRank(place)
+		return get_rank(place)
 	} else if (place==9999) {
 		return 'DQ'
 	} else if (place==9998) {
@@ -38,7 +38,7 @@ function getPlace(place){
 	}
 };
 
-function getRank(rank){
+function get_rank(rank){
 	if (rank==1){
 		return '1st'
 	} else if(rank==2){
@@ -60,17 +60,15 @@ function getRank(rank){
 
 function make_list(entrants) {
     var names = [];
-    console.log(entrants);
     for(var name in entrants) {
-    	var	place = getPlace(entrants[name].place);
+    	var	place = get_place(entrants[name].place);
     	var sep = ''
     	if (place != '') {
     		sep = ' - ';
     	}
     	time = ''
-    	console.log(entrants[name].time);
     	if (entrants[name].time > 0) {
-    		time = getTime(entrants[name].time,entrants[name].place);
+    		time = get_time(entrants[name].time,entrants[name].place);
     	} else if (entrants[name].place == 9994) {
     		time = '';
     	} else {
@@ -78,26 +76,26 @@ function make_list(entrants) {
     	  	}
         names.push(name+sep+place+sep+time);
     }
-    return names;
-}
+    return names
+};
 
-function getTime(secs,place,firstPlaceTime){
+function get_time(secs,place,firstPlaceTime){
 	
 	if(secs>0){
-		convert=secondsToTime(secs)
+		convert=seconds_to_time(secs)
 		secondsDifference=secs-firstPlaceTime
-		difference=secondsToTime(secondsDifference)
+		difference=seconds_to_time(secondsDifference)
 		timeDifference=''
 		if(secondsDifference>0){
 			return'<span title=\"+'+difference.h+':'+difference.m+':'+difference.s+'\">'+convert.h+':'+convert.m+':'+convert.s+'</span>';}else{return convert.h+':'+convert.m+':'+convert.s;
 		}
 	} else {
-		return''
+		return ''
 	}
 	
 };
 
-function secondsToTime(secs){
+function seconds_to_time(secs){
 	var hours=Math.floor(secs/(60*60));
 	hours+='';
 	while(hours.length<2){
@@ -118,8 +116,8 @@ function secondsToTime(secs){
 	var obj= { 
 			"h":hours,"m":minutes,"s":seconds
 	};
-	return obj;
-}
+	return obj
+};
 
 function print_response(data) {
 	race_list = {};
@@ -157,7 +155,8 @@ function print_response(data) {
 	//console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds());
 
 	$('#content').html(some_html);
-}
+};
+
 
 $(document).ready( function(){
 	get_races();
