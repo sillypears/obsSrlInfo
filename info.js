@@ -60,7 +60,7 @@ function getRank(rank){
 
 function make_list(entrants) {
     var names = [];
-    //console.log(entrants);
+    console.log(entrants);
     for(var name in entrants) {
     	var	place = getPlace(entrants[name].place);
     	var sep = ''
@@ -68,11 +68,14 @@ function make_list(entrants) {
     		sep = ' - ';
     	}
     	time = ''
+    	console.log(entrants[name].time);
     	if (entrants[name].time > 0) {
     		time = getTime(entrants[name].time,entrants[name].place);
+    	} else if (entrants[name].place == 9994) {
+    		time = '';
     	} else {
     		time = 'na';
-    	}
+    	  	}
         names.push(name+sep+place+sep+time);
     }
     return names;
