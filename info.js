@@ -124,7 +124,7 @@ function print_response(data) {
 	current_game = get_parameters();
 	$.each(data.races, function (x, object) {
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
-		if (object.statetext == "In Progress") {
+		if (object.statetext == "In Progress" || object.statetext == "Entry Open") {
 			if (object.game.abbrev == current_game) {
 				race_list[object.id] = object;
 			} else if (current_game == 'default') {
