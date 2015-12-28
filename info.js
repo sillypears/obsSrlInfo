@@ -96,6 +96,19 @@ function make_list(entrants) {
     return names
 };
 
+function get_race_time(secs,firstPlaceTime) {
+	if (secs > 0) {
+		var d = new Date();
+		var dd = new Date(0);
+		dd.setUTCSeconds(secs);
+		convert = seconds_to_time((d.getTime()-dd.getTime())/1000);
+		secondsDifference=secs-firstPlaceTime
+		return convert.h+':'+convert.m+':'+convert.s
+	} else {
+		return ''
+	}	
+		
+}
 function get_time(secs,place,firstPlaceTime){
 	
 	if(secs>0){
@@ -155,13 +168,12 @@ function print_response(data) {
 		var some_html = $('<div class=info>Current Races:<div class=entrants ></div></div>');
 	    $.each(race_list, function(x, obj){
 	    	//console.log(obj);
-	    	//var d = new Date(0);
-	    	race_time = obj.time
+	    	race_time = get_race_time(obj.time)
+			
 		    some_html.children('div').append(
 			//'<div class=game>Game: '+obj.game.name+'</div>'+
 			'<div class=goal>Goal: '+obj.goal+
-		    //'<div class=time>Time: '+time.getMinutes()+":"+time.getSeconds()+'</div>'+
-		    '<div class=state>'+obj.statetext+'</div>'+
+		    '<div class=state>'+obj.statetext+' - '+race_time+'</div>'+
 			'<div class=racer>'+
 			'<list><li>'+
 			make_list(obj.entrants).join('</li><li>')+
