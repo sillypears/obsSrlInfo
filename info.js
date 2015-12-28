@@ -2,10 +2,27 @@
 
 var srlAPI = "http://api.speedrunslive.com"; 
 
-function get_parameters() {
+function get_game() {
 	
 	if (location.search.split('game=')[1] != null) {
 		return location.search.split('game=')[1]
+	} else {
+		return 'default'
+	} 
+};
+
+function gup(name){
+	name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var regexS="[\\?&]"+name+"=([^&#]*)";
+	var regex=new RegExp(regexS);
+	var results=regex.exec(window.location.href);
+	if(results==null) return "default"; else return results[1];
+};
+
+function get_user() {
+	
+	if (location.search.split('user=')[1] != null) {
+		return location.search.split('user=')[1]
 	} else {
 		return 'default'
 	} 
@@ -69,7 +86,7 @@ function make_list(entrants) {
     	time = ''
     	if (entrants[name].time > 0) {
     		time = get_time(entrants[name].time,entrants[name].place);
-    	} else if (entrants[name].place == 9994) {
+    	} else if (entrants[name].place == 9994 || entrants[name].statetext == "Entered") {
     		time = '';
     	} else {
     		time = 'na';
@@ -121,7 +138,8 @@ function seconds_to_time(secs){
 
 function print_response(data) {
 	race_list = {};
-	current_game = get_parameters();
+	var current_game = gup('game');
+	var current_user = gup('user');
 	$.each(data.races, function (x, object) {
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.statetext == "In Progress" || object.statetext == "Entry Open") {
@@ -143,6 +161,7 @@ function print_response(data) {
 			//'<div class=game>Game: '+obj.game.name+'</div>'+
 			'<div class=goal>Goal: '+obj.goal+
 		    //'<div class=time>Time: '+time.getMinutes()+":"+time.getSeconds()+'</div>'+
+		    '<div class=state>'+obj.statetext+'</div>'+
 			'<div class=racer>'+
 			'<list><li>'+
 			make_list(obj.entrants).join('</li><li>')+

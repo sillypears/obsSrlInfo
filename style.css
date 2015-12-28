@@ -1,14 +1,26 @@
 html,body{
 	font-family: Arial, Helvetica;
-	font-size: 1em;
+	font-size: .9em;
+
+}
+.info{
+	font-weight: bold;
 
 }
 .game{
 	color: green;
+	font-weight: normal;
 }
 .goal{
 	color: red;
+	font-weight: normal;
+
+}
+.state{
+	color: green;
+	font-weight: normal;
 }
 .racer{
 	color: blue;
+	font-weight: normal;
 }
