@@ -43,55 +43,53 @@ function get_races() {
 		}).done(print_response);	
 };
 
-function get_place(place){
-	if (place < 9994){
-		return get_rank(place)
-	} else if (place==9999) {
-		return 'DQ'
-	} else if (place==9998) {
-		return 'forfeit'
-	} else {
-		return ''
-	}
-};
 
-function get_rank(rank){
-	if (rank==1){
-		return '1st'
-	} else if(rank==2){
-		return '2nd'
-	} else if (rank==3){
-		return '3rd'
-	} else if ((rank==11)||(rank==12)||(rank==13)){
-		return rank+'th'
-	} else if (rank%10==1){
-		return rank+'st'
-	} else if (rank%10==2){
-		return rank+'nd'
-	} else if (rank%10==3){
-		return rank+'rd'
+function get_rank(rank, name, time){
+	if (rank < 9994){
+		if (rank==1){
+			return '<div class=racergold>'+name+' - 1st - '+get_time(time, name)+'</div>'
+		} else if(rank==2){
+			return '<div class=racersilver>'+name+' - 2nd - '+get_time(time, name)+'</div>'
+		} else if (rank==3){
+			return '<div class=racerbronze>'+name+' - 3rd - '+get_time(time, name)+'</div>'
+		} else if ((rank==11)||(rank==12)||(rank==13)){
+			return '<div class=racerdone>'+name+' - '+rank+'th - '+get_time(time, name)+'</div>'
+		} else if (rank%10==1){
+			return '<div class=racergold>'+name+' - '+rank+'st - '+get_time(time, name)+'</div>'
+		} else if (rank%10==2){
+			return '<div class=racersilver>'+name+' - '+rank+'nd - '+get_time(time, name)+'</div>'
+		} else if (rank%10==3){
+			return'<div class=racerbronze>'+name+' - '+rank+'rd - '+get_time(time, name)+'</div>'
+		} else {
+			return '<div class=racerdone>'+name+' - '+rank+'th - '+get_time(time, name)+'</div>'
+		}
+	} else if (rank==9999) {
+		return '<div class=racerdq>'+name+' - DQ</div>'
+	} else if (rank==9998) {
+		return '<div class=racerquit>'+name+' - forfeit</div>'
 	} else {
-		return rank+'th'
-	}
+		return '<div class=racer>'+name+'</div>'
+	} 
 };
 
 function make_list(entrants) {
     var names = [];
     for(var name in entrants) {
-    	var	place = get_place(entrants[name].place);
-    	var sep = ''
-    	if (place != '') {
-    		sep = ' - ';
-    	}
-    	time = ''
-    	if (entrants[name].time > 0) {
-    		time = get_time(entrants[name].time,entrants[name].place);
-    	} else if (entrants[name].place == 9994 || entrants[name].statetext == "Entered") {
-    		time = '';
-    	} else {
-    		time = 'na';
-    	  	}
-        names.push(name+sep+place+sep+time);
+		console.log(entrants[name]);
+    	var holder = get_rank(entrants[name].place, name, entrants[name].time);
+        names.push(holder);
+    	//if (place != '') {
+    	//	place = ' - '+place;
+    	//}
+    	//time = ''
+    	//if (entrants[name].time > 0) {
+    	//	time = ' - '+get_time(entrants[name].time,entrants[name].place);
+    	////} else if (entrants[name].place == 9994 || entrants[name].statetext == "Entered") {
+    	////	time = '';
+    	//} else {
+    	//	time = '';
+    	//}
+		
     }
     return names
 };
@@ -103,7 +101,8 @@ function get_race_time(secs,firstPlaceTime) {
 		dd.setUTCSeconds(secs);
 		convert = seconds_to_time((d.getTime()-dd.getTime())/1000);
 		secondsDifference=secs-firstPlaceTime
-		return convert.h+':'+convert.m+':'+convert.s
+		return ' - '+convert.h+':'+convert.m+':'+convert.s
+		
 	} else {
 		return ''
 	}	
@@ -153,30 +152,42 @@ function print_response(data) {
 	race_list = {};
 	var current_game = gup('game');
 	var current_user = gup('user');
+	var disp_title = gup('title');
+	var disp_state = gup('state');
+	var disp_state = gup('time');
+	var disp_entrants = gup('entrants');
+	var disp_goal = gup('goal');
 	$.each(data.races, function (x, object) {
+		
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.statetext == "In Progress" || object.statetext == "Entry Open") {
-			if (object.game.abbrev == current_game) {
+			if ((object.game.abbrev == current_game)) {
 				race_list[object.id] = object;
 			} else if (current_game == 'default') {
+			//} else if (object.game.abbrev == current_game) {
+			//	race_list[object.id] = object;
+			//} else {
 				race_list[object.id] = object;
 			}
 		}
 		});
+	
 	if (Object.keys(race_list).length > 0) {
-
+	
 		var some_html = $('<div class=info>Current Races:<div class=entrants ></div></div>');
 	    $.each(race_list, function(x, obj){
 	    	//console.log(obj);
-	    	race_time = get_race_time(obj.time)
-			
-		    some_html.children('div').append(
-			//'<div class=game>Game: '+obj.game.name+'</div>'+
-			'<div class=goal>Goal: '+obj.goal+
-		    '<div class=state>'+obj.statetext+' - '+race_time+'</div>'+
+			entrant_list = make_list(obj.entrants);
+	    	race_time = get_race_time(obj.time);
+			if (disp_title == true) {
+				some_html.children('div').append('<div class=game>Game: '+obj.game.name+'</div>');
+			}
+			some_html.children('div').append('<div class=goal>Goal: '+obj.goal);
+			some_html.children('div').append(		
+		    '<div class=state>'+obj.statetext+'<span class=time>'+race_time+'</span></div>'+
 			'<div class=racer>'+
 			'<list><li>'+
-			make_list(obj.entrants).join('</li><li>')+
+			entrant_list.join('</li><li>')+
 			'</li></div></div>&nbsp</div>');
 	  });
     } else {

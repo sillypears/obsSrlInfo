@@ -1,6 +1,7 @@
 html,body{
 	font-family: Arial, Helvetica;
 	font-size: .9em;
+	
 
 }
 .info{
@@ -12,15 +13,43 @@ html,body{
 	font-weight: normal;
 }
 .goal{
-	color: red;
+	color: blue;
 	font-weight: normal;
 
 }
 .state{
+	color: blue;
+	font-weight: normal;
+}
+.time{
 	color: green;
 	font-weight: normal;
 }
 .racer{
-	color: blue;
+	color: black;
+	font-weight: normal;
+}
+.racerdq{
+	color: red;
+	font-weight: normal;
+}
+.racerquit{
+	color: red;
+	font-weight: normal;
+}
+.racergold {
+	color: gold;
+	font-weight: bold;
+}
+.racersilver {
+	color: silver;
+	font-weight: bold;
+}
+.racerbronze {
+	color: brown;
+	font-weight: bold;
+}
+.racerdone {
+	color: green;
 	font-weight: normal;
 }
