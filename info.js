@@ -75,20 +75,10 @@ function get_rank(rank, name, time){
 function make_list(entrants) {
     var names = [];
     for(var name in entrants) {
-		console.log(entrants[name]);
+
     	var holder = get_rank(entrants[name].place, name, entrants[name].time);
         names.push(holder);
-    	//if (place != '') {
-    	//	place = ' - '+place;
-    	//}
-    	//time = ''
-    	//if (entrants[name].time > 0) {
-    	//	time = ' - '+get_time(entrants[name].time,entrants[name].place);
-    	////} else if (entrants[name].place == 9994 || entrants[name].statetext == "Entered") {
-    	////	time = '';
-    	//} else {
-    	//	time = '';
-    	//}
+
 		
     }
     return names
@@ -174,14 +164,12 @@ function print_response(data) {
 	
 	if (Object.keys(race_list).length > 0) {
 	
-		var some_html = $('<div class=info>Current Races:<div class=entrants ></div></div>');
+		var some_html = $('<div class=info> <div class=entrants ></div></div>');
+		
 	    $.each(race_list, function(x, obj){
 	    	//console.log(obj);
 			entrant_list = make_list(obj.entrants);
 	    	race_time = get_race_time(obj.time);
-			if (disp_title == true) {
-				some_html.children('div').append('<div class=game>Game: '+obj.game.name+'</div>');
-			}
 			some_html.children('div').append('<div class=goal>Goal: '+obj.goal);
 			some_html.children('div').append(		
 		    '<div class=state>'+obj.statetext+'<span class=time>'+race_time+'</span></div>'+
