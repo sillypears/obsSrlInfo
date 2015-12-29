@@ -6,24 +6,24 @@ html,body{
 }
 .info{
 	font-weight: bold;
-
+	background-color: lightgrey;
 }
 .game{
 	color: green;
 	font-weight: normal;
 }
 .goal{
-	color: blue;
+	color: purple;
 	font-weight: bold;
 
 }
 .state{
-	color: blue;
-	font-weight: normal;
+	color: purple;
+	font-weight: bold;
 }
 .time{
 	color: green;
-	font-weight: normal;
+	font-weight: bold;
 }
 .racer{
 	color: black;
@@ -38,7 +38,7 @@ html,body{
 	font-weight: normal;
 }
 .racergold {
-	color: gold;
+	color: yellow;
 	font-weight: bold;
 }
 .racersilver {
