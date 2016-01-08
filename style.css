@@ -30,9 +30,13 @@ html,body{
 	color: green;
 	font-weight: bold;
 }
-.racer{
-	color: black;
+.racerenter{
+	color: yellow;
 	font-weight: normal;
+}
+.racerready{
+	color: black;
+	font-weight: bold;
 }
 .racerdq{
 	color: red;

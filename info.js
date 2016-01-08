@@ -44,7 +44,7 @@ function get_races() {
 };
 
 
-function get_rank(rank, name, time){
+function get_rank(rank, name, time, state){
 	if (rank < 9994){
 		if (rank==1){
 			return '<div class=racergold>'+name+' - 1st - '+get_time(time, name)+'</div>'
@@ -67,16 +67,18 @@ function get_rank(rank, name, time){
 		return '<div class=racerdq>'+name+' - DQ</div>'
 	} else if (rank==9998) {
 		return '<div class=racerquit>'+name+' - forfeit</div>'
-	} else {
-		return '<div class=racer>'+name+'</div>'
-	} 
+	} else if (state == "Entered"){
+		return '<div class=racerenter>'+name+'</div>'
+	} else if (state == "Ready") {
+		return '<div class=racerready>'+name+'</div>'
+	}
 };
 
 function make_list(entrants) {
     var names = [];
     for(var name in entrants) {
 
-    	var holder = get_rank(entrants[name].place, name, entrants[name].time);
+    	var holder = get_rank(entrants[name].place, name, entrants[name].time, entrants[name].statetext);
         names.push(holder);
 
 		
@@ -149,7 +151,8 @@ function print_response(data) {
 	var disp_goal = gup('goal');
 	//console.log(data)
 	$.each(data.races, function (x, object) {
-		
+		console.log(object);
+
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.state == "1" || object.state == "2" || object.state == "3") {
 			if ((object.game.abbrev == current_game)) {
