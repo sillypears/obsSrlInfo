@@ -91,7 +91,7 @@ function get_race_time(secs,firstPlaceTime) {
 		dd.setUTCSeconds(secs);
 		convert = seconds_to_time((d.getTime()-dd.getTime())/1000);
 		secondsDifference=secs-firstPlaceTime
-		return ' - '+convert.h+':'+convert.m+':'+convert.s
+		return '<span class=hyphen_time> - </span>'+convert.h+':'+convert.m+':'+convert.s
 		
 	} else {
 		return ''

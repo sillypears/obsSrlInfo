@@ -10,6 +10,10 @@ html,body{
 	font-weight: bold;
 	background-color: lightblue;
 }
+.hyphen_time{
+	font-weight: bold;
+	color: red;
+}
 .game{
 	color: red;
 	font-weight: normal;
