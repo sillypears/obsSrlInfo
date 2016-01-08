@@ -141,19 +141,24 @@ function seconds_to_time(secs){
 function print_response(data) {
 	race_list = {};
 	var current_game = gup('game');
-	var current_user = gup('user');
+	var current_player = gup('player');
 	var disp_title = gup('title');
 	var disp_state = gup('state');
 	var disp_state = gup('time');
 	var disp_entrants = gup('entrants');
 	var disp_goal = gup('goal');
-	console.log(data)
+	//console.log(data)
 	$.each(data.races, function (x, object) {
 		
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.state == "1" || object.state == "2" || object.state == "3") {
 			if ((object.game.abbrev == current_game)) {
-				race_list[object.id] = object;
+				player = $.inArray(current_player, Object.keys(object.entrants));
+				if (player == 1) {
+					race_list[object.id] = object;
+				} else if (current_player == "default")  {
+					race_list[object.id] = object;
+				}
 			} else if (current_game == 'default') {
 			//} else if (object.game.abbrev == current_game) {
 			//	race_list[object.id] = object;
@@ -162,7 +167,8 @@ function print_response(data) {
 			}
 		}
 		});
-	
+	total_races = Object.keys(race_list).length;
+
 	if (Object.keys(race_list).length > 0) {
 	
 		var some_html = $('<div class=info> <div class=entrants ></div></div>');
@@ -170,7 +176,7 @@ function print_response(data) {
 	    $.each(race_list, function(x, obj){
 			entrant_list = make_list(obj.entrants);
 	    	race_time = get_race_time(obj.time);
-			some_html.children('div').append('<div class=goal>Goal: '+obj.goal);
+			some_html.children('div').append('<div class=goal>'+obj.goal);
 			some_html.children('div').append(		
 		    '<div class=state>'+obj.statetext+'<span class=time>'+race_time+'</span></div>'+
 			'<div class=racer>'+

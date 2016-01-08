@@ -1,24 +1,21 @@
 html,body{
 	font-family: Arial, Helvetica;
 	font-size: .9em;
-	
-
 }
 .info{
 	font-weight: bold;
-	background-color: lightgrey;
+	background-color: lightblue;
 }
 .game{
-	color: green;
+	color: red;
 	font-weight: normal;
 }
 .goal{
-	color: purple;
+	color: black;
 	font-weight: bold;
-
 }
 .state{
-	color: purple;
+	color: green;
 	font-weight: bold;
 }
 .time{
