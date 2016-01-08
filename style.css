@@ -6,6 +6,10 @@ html,body{
 	font-weight: bold;
 	background-color: lightblue;
 }
+.notracing{
+	font-weight: bold;
+	background-color: lightblue;
+}
 .game{
 	color: red;
 	font-weight: normal;
