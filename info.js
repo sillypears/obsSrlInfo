@@ -153,7 +153,7 @@ function print_response(data) {
 	var disp_goal = gup('goal');
 	//console.log(data)
 	$.each(data.races, function (x, object) {
-		console.log(object);
+		//console.log(object);
 
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.state == "1" || object.state == "2" || object.state == "3") {
