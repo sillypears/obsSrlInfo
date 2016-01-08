@@ -38,6 +38,10 @@ html,body{
 	color: black;
 	font-weight: bold;
 }
+.racer{
+	color: black;
+	font-weight: normal;
+}
 .racerdq{
 	color: red;
 	font-weight: normal;

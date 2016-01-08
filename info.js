@@ -71,6 +71,8 @@ function get_rank(rank, name, time, state){
 		return '<div class=racerenter>'+name+'</div>'
 	} else if (state == "Ready") {
 		return '<div class=racerready>'+name+'</div>'
+	} else {
+		return '<div class=racer>'+name+'</div>'
 	}
 };
 
