@@ -12,3 +12,6 @@ Attempting to make a thing for an OBS Overlay that displays current races (event
   2. IE http://sillypears.github.io/obsSrlInfo/?game=isaacafterbirth&player=sillypears
 5. Give the window some dimensions as you'd like it to show on screen
 6. Click OK and move/place the layer where you want it
+7. You can also change default colors/fonts within OBS by enabling the hijack feature and stealing the css from here:
+  1. http://sillypears.github.io/obsSrlInfo/style.css
+
