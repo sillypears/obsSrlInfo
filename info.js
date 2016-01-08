@@ -185,7 +185,7 @@ function print_response(data) {
 			'</li></div></div>&nbsp</div>');
 	  });
     } else {
-    	some_html = $('<div class=noraces>Not currently racing</div>');
+    	some_html = $('<div class=notracing>Not currently racing</div>');
     }   
 	//var date = new Date();
 	//console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds());
