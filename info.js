@@ -157,9 +157,9 @@ function print_response(data) {
 
 		//if (object.game.abbrev == current_game && object.statetext == "In Progress") {
 		if (object.state == "1" || object.state == "2" || object.state == "3") {
-			if ((object.game.abbrev == current_game)) {
+			if (object.game.abbrev == current_game) {
 				player = $.inArray(current_player, Object.keys(object.entrants));
-				if (player == 1) {
+				if (player >= 0) {
 					race_list[object.id] = object;
 				} else if (current_player == "default")  {
 					race_list[object.id] = object;
