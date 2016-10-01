@@ -203,6 +203,6 @@ $(document).ready( function(){
 	get_races();
 	setInterval(function(){
 		get_races();
-	}, 30000);
+	}, 10000);
  }
 )
