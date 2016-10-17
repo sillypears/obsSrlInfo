@@ -180,8 +180,9 @@ function print_response(data) {
 		
 	    $.each(race_list, function(x, obj){
 			entrant_list = make_list(obj.entrants);
+			console.log(obj.id);
 	    	race_time = get_race_time(obj.time);
-			some_html.children('div').append('<div class=goal>'+obj.goal);
+			some_html.children('div').append('<div class=goal><a href=\'http://www.speedrunslive.com/race/?id='+obj.id+'\'>'+obj.goal+'</a>');
 			some_html.children('div').append(		
 		    '<div class=state>'+obj.statetext+'<span class=time>'+race_time+'</span></div>'+
 			'<div class=racer>'+
